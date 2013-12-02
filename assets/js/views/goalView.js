@@ -14,7 +14,8 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 			"click button#delete": "deleteGoal",
 			"click button#add-day": "showDescr",
 			"click button#addDayButton": "submit",
-			"click button#edit": "edit"
+            "mouseenter div.panel-heading": "hoverGoal",
+            "mouseleave div.panel-heading": "unHoverGoal"
 		},
 
 		render: function() {
@@ -81,15 +82,22 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 			if(this.day.isValid(true)) {
 				// Add day, with descr to this goal
 				this.model.addDay(this.day);
-				this.model.save();
+                this.model.save();
 			}
 		},
 
-		// When the user wants to edit a specific goal
-		edit: function() {
-			console.log("edit");
-			// window.history.pushState('page2', 'Title', '/page2.php');
-		},
+        hoverGoal: function() {
+            this.$("div.panel").animate({
+               opacity: "0.5"
+            });
+            console.log("Hoverid: " + this.model.id);
+        },
+
+        unHoverGoal: function() {
+            this.$("div.panel").animate({
+                opacity: "1"
+            });
+        },
 
 		// Populate view
 		name: function() { return this.model.name(); },

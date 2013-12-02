@@ -11,16 +11,16 @@ define(["backbone", "mustache", "goals", "addgoalview", "goalsview", "goal", "te
 			this.goals.on("sync", this.render, this);
 			this.goals.on("change", this.render, this);
 			this.goals.on("destroy", this.render, this);
-			this.goals.fetch();
+            this.goals.fetch();
 
 			// Subcollection
+            var that = this;
 			this.goals.each(function(goal) {
-				goal.days.on("sync", this.render, this);
-				goal.days.on("change", this.render, this);
-				goal.days.on("destroy", this.render, this);
+				goal.days.on("sync", that.render, that);
+				goal.days.on("change", that.render, that);
+				goal.days.on("destroy", that.render, that);
 				goal.days.fetch();
 			}, this);
-
 		},
 
 		render: function() {

@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: 'assets',
 
 
     // frameworks to use
@@ -53,7 +53,13 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
+
+    preprocessors: { 'js/models/goal.js': ['coverage'] },
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
+    },
 
 
     // Start these browsers, currently available:

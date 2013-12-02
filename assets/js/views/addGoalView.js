@@ -45,9 +45,11 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 			this.model.setName(this.$("input#name").val());
 
 			if(this.model.isValid(true)) {
-				this.collection.create(this.model);
+                this.collection.create(this.model);
+                // this.collection.sync("create", this.model);
+                this.model.save();
 			}
-		},
+		}
 	});
 
 	return AddGoalView;

@@ -3,6 +3,7 @@ define(["backbone", "mustache", "goalview"], function(Backbone, Mustache, GoalVi
 	var GoalsView = Backbone.View.extend({
 
 		initialize: function() {
+
 		},
 
 		render: function() {

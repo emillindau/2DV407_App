@@ -1,6 +1,9 @@
 define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/editTemplate.html"], function(Backbone, Mustache, Goals, Goal, DaysView, editTemplate) {
 
 	var EditView = Backbone.View.extend({
+
+        tagName: "form",
+        className: "form-horizontal",
 		template: Mustache.compile(editTemplate),
 
 		initialize: function(opt) {
@@ -9,6 +12,10 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 			this.goal = this.goals.getGoalById(opt.goalId);
 			this.goal.days.fetch();
 		},
+
+        events: {
+            "submit": "submit"
+        },
 
 		render: function() {
 			this.$el.html(this.template(this));
@@ -21,8 +28,21 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 			return this;
 		},
 
+        submit: function(event) {
+            event.preventDefault();
+            console.log("save");
+
+            this.goal.setName(this.$("input#name").val());
+
+            if(this.goal.isValid(true)) {
+                this.goal.save();
+
+                // Should also display a correct message
+            }
+        },
+
 		// View helpers for populating templates
-		name: function() { return "edit"; },
+		name: function() { return this.goal.name(); },
 		count: function() { return this.goal.days.length; }
 	});
 

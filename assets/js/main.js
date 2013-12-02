@@ -23,7 +23,9 @@ require.config({
 		"day": "js/models/day",
 		"days": "js/collections/days",
 		"daysview": "js/views/daysView",
-		"dayview": "js/views/dayView"
+		"dayview": "js/views/dayView",
+        "specificgoalview": "js/views/specificGoalView",
+        "aboutview": "js/views/aboutView"
 	},
 
 	shim: {

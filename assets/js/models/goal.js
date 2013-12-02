@@ -22,10 +22,11 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 
 		// Helper for adding one to current day
 		addDay: function(day) {
-
 			// Adding to collection
-			this.days.add(day);
-			day.save();
+            this.days = new Days();
+            this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
+            console.log("THIS LOCALSTORAGE: ", this.days.localStorage);
+			this.days.create(day);
 		},
 
 		// Setters
