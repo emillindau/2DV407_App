@@ -6,8 +6,9 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 		className: "form-horizontal",
 		template: Mustache.compile(goalFormTemplate),
 
+        // The model will be set from indexView
 		initialize: function() {
-
+            // Empty
 		},
 
 		events: {
@@ -35,6 +36,7 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 			});
 
 			this.$el.html(this.template(this));
+
 			return this;
 		},
 
@@ -42,12 +44,14 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 		submit: function(event) {
 			event.preventDefault();
 
+            // Set name to this model
 			this.model.setName(this.$("input#name").val());
 
+            // And if it's valid, add it to collection.
 			if(this.model.isValid(true)) {
                 this.collection.create(this.model);
                 // this.collection.sync("create", this.model);
-                this.model.save();
+                // this.model.save();
 			}
 		}
 	});

@@ -11,7 +11,7 @@ define(["backbone", "mustache", "goals", "goal", "text!templates/specificGoalTem
             this.goals = new Goals();
             this.goals.fetch();
             this.goal = this.goals.getGoalById(opt.goalId);
-            this.goal.days.fetch();
+            this.goal.setUpStorage();
         },
 
         render: function() {

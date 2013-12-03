@@ -7,10 +7,11 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 		template: Mustache.compile(editTemplate),
 
 		initialize: function(opt) {
+            // Getting the appropiate collections
 			this.goals = new Goals();
 			this.goals.fetch();
 			this.goal = this.goals.getGoalById(opt.goalId);
-			this.goal.days.fetch();
+            this.goal.setUpStorage();
 		},
 
         events: {
@@ -22,7 +23,6 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 
 			// Subviews, in this case daysview
 			var daysView = new DaysView( { collection: this.goal.days } );
-
 			this.$(".days").append(daysView.render().el);
 
 			return this;
@@ -30,14 +30,12 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 
         submit: function(event) {
             event.preventDefault();
-            console.log("save");
 
             this.goal.setName(this.$("input#name").val());
 
             if(this.goal.isValid(true)) {
                 this.goal.save();
-
-                // Should also display a correct message
+                // TODO: Should also display a correct message
             }
         },
 

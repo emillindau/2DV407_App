@@ -1,5 +1,10 @@
 define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], function(Backbone, Mustache, Day, goalTemplate) {
 
+    /**
+     * Probably considered as the mainview, in some ways
+     * displaying the pure and basic model of a goal
+     * @type {GoalView}
+     */
 	var GoalView = Backbone.View.extend({
 
 		template: Mustache.compile(goalTemplate),
@@ -82,7 +87,6 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 			if(this.day.isValid(true)) {
 				// Add day, with descr to this goal
 				this.model.addDay(this.day);
-                this.model.save();
 			}
 		},
 

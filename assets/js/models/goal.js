@@ -3,7 +3,8 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 	var Goal = Backbone.Model.extend({
 
 		defaults: {
-			name: ""
+			name: "",
+            active: true
 		},
 
 		// Validation using Backbone.Validation-plugin
@@ -16,17 +17,22 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		},
 
 		initialize: function() {
-			this.days = new Days();
-			this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
 		},
+
+        setUpStorage: function() {
+            this.days = new Days();
+            this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
+            this.days.fetch();
+        },
 
 		// Helper for adding one to current day
 		addDay: function(day) {
 			// Adding to collection
-            this.days = new Days();
-            this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
-            console.log("THIS LOCALSTORAGE: ", this.days.localStorage);
+           //  this.days = new Days();
+            // this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
 			this.days.create(day);
+            // this.days.fetch();
+            // this.save();
 		},
 
 		// Setters
@@ -35,8 +41,9 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		},
 
 		// Just for convenience
-		name: function() { return this.get("name"); },
-		days: function() { return this.get("days"); }
+		name: function() { return this.get("name") + this.id; },
+		days: function() { return this.get("days"); },
+        active: function() { return this.get("active"); }
 
 	});
 

@@ -3,6 +3,7 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
 	var Router = Backbone.Router.extend({
 
 		// This is probably not that good of solution
+        // so we'll leave it commented out
 		/*
 		views: (function() {
 			var indexView = new IndexView();
@@ -21,10 +22,12 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
 		})(),
 		*/
 
+        // Thats probably main residing in opt, but could be any element
 		initialize: function(opt) {
 			this.el = opt.el;
 		},
 
+        // The routes
 		routes: {
 			"": "index",
 			"edit/:goalId": "edit",
@@ -53,6 +56,7 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
             this.el.append(view.render().el);
         },
 
+        // 'static' about-page
         about: function() {
             var view = new AboutView();
             this.el.empty();

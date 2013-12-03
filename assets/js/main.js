@@ -25,7 +25,8 @@ require.config({
 		"daysview": "js/views/daysView",
 		"dayview": "js/views/dayView",
         "specificgoalview": "js/views/specificGoalView",
-        "aboutview": "js/views/aboutView"
+        "aboutview": "js/views/aboutView",
+        "messageview": "js/views/messageView"
 	},
 
 	shim: {
@@ -45,11 +46,10 @@ require.config({
 require(["jquery", "router", "backbone", "underscore"], function($, Router, Backbone, _) {
 
 	$(function() {
-
+        // Everything happens in main, really
 		var container = $("#main");
 		var router = new Router({el: container});
 		Backbone.history.start();
-
 	});
 
 });

@@ -47,7 +47,6 @@ define(["goal", "backbone"], function(Goal, Backbone) {
 
 			expect(goal.days).toBeDefined();
 			expect(goal.days.length).toBe(0);
-
 		});
 
 	});
