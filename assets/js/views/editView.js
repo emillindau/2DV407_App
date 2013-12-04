@@ -1,10 +1,12 @@
-define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/editTemplate.html"], function(Backbone, Mustache, Goals, Goal, DaysView, editTemplate) {
+define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/editTemplate.html", "messageview"], function(Backbone, Mustache, Goals, Goal, DaysView, editTemplate, MessageView) {
 
 	var EditView = Backbone.View.extend({
 
         tagName: "form",
         className: "form-horizontal",
 		template: Mustache.compile(editTemplate),
+        showMessage: false,
+        message: {},
 
 		initialize: function(opt) {
             // Getting the appropiate collections
@@ -12,6 +14,13 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 			this.goals.fetch();
 			this.goal = this.goals.getGoalById(opt.goalId);
             this.goal.setUpStorage();
+
+            var that = this;
+            this.listenTo(this.goal, "change", function() {
+                that.showMessage = true;
+                that.message = {error: false, message: "The goal has been edited and saved! Keep working!", header: "Success!"};
+                that.render();
+            })
 		},
 
         events: {
@@ -25,6 +34,12 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 			var daysView = new DaysView( { collection: this.goal.days } );
 			this.$(".days").append(daysView.render().el);
 
+            if(this.showMessage) {
+                var messageView = new MessageView(this.message);
+                this.$(".messages").append(messageView.render().el);
+                this.showMessage = false;
+            }
+
 			return this;
 		},
 
@@ -35,7 +50,6 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 
             if(this.goal.isValid(true)) {
                 this.goal.save();
-                // TODO: Should also display a correct message
             }
         },
 
