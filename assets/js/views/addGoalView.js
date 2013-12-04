@@ -50,8 +50,6 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
             // And if it's valid, add it to collection.
 			if(this.model.isValid(true)) {
                 this.collection.create(this.model);
-                // this.collection.sync("create", this.model);
-                // this.model.save();
 			}
 		}
 	});

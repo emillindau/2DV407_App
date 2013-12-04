@@ -94,7 +94,6 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
             this.$("div.panel").animate({
                opacity: "0.5"
             });
-            console.log("Hoverid: " + this.model.id);
         },
 
         unHoverGoal: function() {

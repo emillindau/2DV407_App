@@ -22,6 +22,8 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
 		})(),
 		*/
 
+        view: {},
+
         // Thats probably main residing in opt, but could be any element
 		initialize: function(opt) {
 			this.el = opt.el;
@@ -35,32 +37,45 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
             "about": "about"
 		},
 
+        changeView: function(newView) {
+
+            // Not all views, as of now, has the dispose-function
+            if(typeof this.view.dispose === "function") {
+                this.view.dispose();
+            }
+            this.view = newView;
+        },
+
         // Mainpage, shows all goals and add-goal form
 		index: function() {
-			var view = new IndexView();
+            this.changeView(new IndexView());
+			// var view = new IndexView();
 			this.el.empty();
-			this.el.append(view.render().el);
+			this.el.append(this.view.render().el);
 		},
 
         // Shows a goal + days with edit privileges
 		edit: function(goalId) {
-			var view = new EditView( {goalId: goalId} );
+            this.changeView(new EditView({ goalId: goalId} ));
+			// var view = new EditView( {goalId: goalId} );
 			this.el.empty();
-			this.el.append(view.render().el);
+			this.el.append(this.view.render().el);
 		},
 
         // Shows a specific goal
         goal: function(goalId) {
-            var view = new SpecificGoalView( {goalId: goalId} );
+            //var view = new SpecificGoalView( {goalId: goalId} );
+            this.changeView(new SpecificGoalView( {goalId: goalId} ));
             this.el.empty();
-            this.el.append(view.render().el);
+            this.el.append(this.view.render().el);
         },
 
         // 'static' about-page
         about: function() {
-            var view = new AboutView();
+            //var view = new AboutView();
+            this.changeView(new AboutView());
             this.el.empty();
-            this.el.append(view.render().el);
+            this.el.append(this.view.render().el);
         }
 
 	});

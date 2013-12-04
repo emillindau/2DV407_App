@@ -1,4 +1,4 @@
-define(["backbone", "mustache", "goalview", "days"], function(Backbone, Mustache, GoalView, Days) {
+define(["backbone", "mustache", "goalview"], function(Backbone, Mustache, GoalView) {
 
 	var GoalsView = Backbone.View.extend({
 
@@ -7,10 +7,9 @@ define(["backbone", "mustache", "goalview", "days"], function(Backbone, Mustache
             var that = this;
             this.collection.each(function(goal) {
 
-                //goal.days = new Days();
-                //goal.days.localStorage = new Backbone.LocalStorage("Days" + goal.id);
-                //goal.days.fetch();
+                // Setting up localStorage
                 goal.setUpStorage();
+                // Listen to sync and re-render
                 that.listenTo(goal.days, "sync", function() {
                     that.render();
                 });
@@ -28,7 +27,12 @@ define(["backbone", "mustache", "goalview", "days"], function(Backbone, Mustache
 				}
 			}, this);
 			return this;
-		}
+		},
+
+        dispose: function() {
+            this.stopListening();
+            this.off();
+        }
 	});
 
 	return GoalsView;

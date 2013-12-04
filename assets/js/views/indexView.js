@@ -22,32 +22,10 @@ define(["backbone", "mustache", "goals", "addgoalview", "goalsview", "goal", "te
             // For showing messages
             this.listenTo(this.goals, "add", function() {
                 that.showMessage = true;
-                that.message = {error: false, message: "success!!", header: "hello!"};
+                that.message = {error: false, message: "The goal has been added! Now try and keep it non zero!", header: "Success!"};
             });
 
             this.listenTo(this.goals, "destroy", this.render);
-
-			// this.goals.on("sync", this.render, this);
-			// this.goals.on("change", this.render, this);
-			// this.goals.on("destroy", this.render, this);
-
-
-			// Subcollection for every goal, days
-
-			// this.goals.each(function(goal) {
-			//	goal.days.on("sync", that.render, that);
-			//	goal.days.on("change", that.render, that);
-			//	goal.days.on("destroy", that.render, that);
-			//	goal.days.fetch();
-//
-  //              that.listenTo(goal.days, "add", function() {
-    //                that.showMessage = true;
-      //              that.message = {error: false, message: "success!!", header: "hello!"};
-        //            console.log("We got here!!");
-          //          that.render();
-            //    });
-
-			//}, this);
 		},
 
 		render: function() {
@@ -64,8 +42,8 @@ define(["backbone", "mustache", "goals", "addgoalview", "goalsview", "goal", "te
 
             if(this.showMessage) {
                 var messageView = new MessageView(this.message);
-                this.$el.append(messageView.render().el);
-                console.log("Well, we got here");
+                this.$(".messages").append(messageView.render().el);
+                this.showMessage = false;
             }
 
 			return this;

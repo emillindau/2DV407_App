@@ -18,6 +18,11 @@ define(["backbone", "mustache", "text!templates/messagesTemplate.html"], functio
             this.header = opt.header;
             this.error = opt.error;
             this.message = opt.message;
+
+            var that = this;
+            setTimeout( function() {
+                that.dismiss();
+            }, 3000);
         },
 
         render: function() {
@@ -26,14 +31,14 @@ define(["backbone", "mustache", "text!templates/messagesTemplate.html"], functio
         },
 
         setMessage: function(opt) {
-            this.header = opt.header;
-            this.error = opt.error;
-            this.message = opt.message;
+            this.initialize(opt);
         },
 
         // Callbacks
         dismiss: function() {
-            this.$(".alert").hide();
+            this.$(".alert").hide("slow", function() {
+
+            });
         },
 
         // Populate view

@@ -28,11 +28,7 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		// Helper for adding one to current day
 		addDay: function(day) {
 			// Adding to collection
-           //  this.days = new Days();
-            // this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
 			this.days.create(day);
-            // this.days.fetch();
-            // this.save();
 		},
 
 		// Setters
@@ -41,7 +37,7 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		},
 
 		// Just for convenience
-		name: function() { return this.get("name") + this.id; },
+		name: function() { return this.get("name"); },
 		days: function() { return this.get("days"); },
         active: function() { return this.get("active"); }
 
