@@ -2,8 +2,6 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 
 	var EditView = Backbone.View.extend({
 
-        tagName: "form",
-        className: "form-horizontal",
 		template: Mustache.compile(editTemplate),
         showMessage: false,
         message: {},
@@ -16,11 +14,11 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
             this.goal.setUpStorage();
 
             var that = this;
-            this.listenTo(this.goal, "change", function() {
+            this.listenTo(this.goal, "sync", function() {
                 that.showMessage = true;
                 that.message = {error: false, message: "The goal has been edited and saved! Keep working!", header: "Success!"};
                 that.render();
-            })
+            });
 		},
 
         events: {
@@ -28,6 +26,7 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
         },
 
 		render: function() {
+
 			this.$el.html(this.template(this));
 
 			// Subviews, in this case daysview
@@ -39,6 +38,26 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
                 this.$(".messages").append(messageView.render().el);
                 this.showMessage = false;
             }
+
+            // Binding the validation to this view
+            var that = this;
+            Backbone.Validation.bind(this, {
+                model: that.goal,
+                valid: function(view, attr) {
+                    var $el = view.$("[name=" + attr + "]"),
+                        $group = $el.closest(".form-group");
+
+                    $group.removeClass("has-error");
+                    $group.find(".help-block").html("").addClass("hidden");
+                },
+                invalid: function(view, attr, error) {
+                    var $el = view.$("[name=" + attr + "]"),
+                        $group = $el.closest(".form-group");
+
+                    $group.addClass("has-error");
+                    $group.find(".help-block").html(error).removeClass("hidden");
+                }
+            });
 
 			return this;
 		},

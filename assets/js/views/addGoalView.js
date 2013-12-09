@@ -51,7 +51,11 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 			if(this.model.isValid(true)) {
                 this.collection.create(this.model);
 			}
-		}
+		},
+
+        dispose: function() {
+            Backbone.Validation.unbind(this);
+        }
 	});
 
 	return AddGoalView;
