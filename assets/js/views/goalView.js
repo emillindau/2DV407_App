@@ -105,7 +105,12 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 		// Populate view
 		name: function() { return this.model.name(); },
 		days: function() { return this.model.days.length; },
-		goalId: function() {return this.model.id; }
+		goalId: function() { return this.model.id; },
+        active: function() { return this.model.active() },
+
+        dispose: function() {
+            Backbone.Validation.unbind(this, {model: this.day});
+        }
 
 	});
 

@@ -23,6 +23,12 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
             this.days = new Days();
             this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
             this.days.fetch();
+
+            // While we're here we can check if this goal still is active
+            if(this.days.checkInvalidDay()) {
+                // If we get here, sadly, this goal is inactive
+                this.set("active", false);
+            }
         },
 
 		// Helper for adding one to current day
