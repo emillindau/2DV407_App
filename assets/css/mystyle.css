@@ -1,6 +1,11 @@
 .header {
-	background: url('../img/header_slim.png') top left no-repeat;
-	margin: 0px auto;
-	width: 960px;
-	height: 244px;
+     background: url('../img/header_slim.png') top left no-repeat;
+     margin: 0px auto;
+     width: 960px;
+     height: 244px;
+     margin-top: 45px;
+ }
+
+body {
+    background: url('../img/geometry.png') top left repeat;
 }
