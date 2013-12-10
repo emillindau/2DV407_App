@@ -1,4 +1,4 @@
-define(["backbone", "days", "day"], function(Backbone, Days, Day){
+define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 
 	var Goal = Backbone.Model.extend({
 
@@ -17,6 +17,7 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		},
 
 		initialize: function() {
+            this.level = RANK.NONE;
 		},
 
         setUpStorage: function() {
@@ -28,6 +29,24 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
             if(this.days.checkInvalidDay()) {
                 // If we get here, sadly, this goal is inactive
                 this.set("active", false);
+            }
+
+            // Can also check current rank here
+            if(this.get("active")) {
+                this.calculateCurrentRank();
+            }
+        },
+
+        calculateCurrentRank: function() {
+            var l = this.days.length;
+            if(l > 5) {
+                this.level = RANK.GOLD;
+            } else if(l > 3) {
+                this.level = RANK.SILVER;
+            } else if(l > 1) {
+                this.level = RANK.BRONZE;
+            } else {
+                this.level = RANK.NONE;
             }
         },
 
@@ -45,7 +64,8 @@ define(["backbone", "days", "day"], function(Backbone, Days, Day){
 		// Just for convenience
 		name: function() { return this.get("name"); },
 		days: function() { return this.get("days"); },
-        active: function() { return this.get("active"); }
+        active: function() { return this.get("active"); },
+        getLevel: function() { return this.level; }
 
 	});
 

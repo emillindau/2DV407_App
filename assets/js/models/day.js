@@ -18,9 +18,6 @@ define(["backbone"], function(Backbone) {
 		},
 
 		initialize: function() {
-			console.log("day init");
-            // console.log(typeof this.get("date"));
-            // console.log(typeof this.date());
 		},
 
         date: function() { return this.get("date") }

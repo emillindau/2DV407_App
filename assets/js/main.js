@@ -13,6 +13,7 @@ require.config({
 		"mustache": "js/libs/mustache",
 		"underscore": "js/libs/underscore",
 		"router": "js/routers/router",
+        "rank": "js/models/rank",
 		"indexview": "js/views/indexView",
 		"editview": "js/views/editView",
 		"addgoalview": "js/views/addGoalView",
