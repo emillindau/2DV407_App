@@ -33,11 +33,11 @@ define(["backbone", "mustache", "goals", "addgoalview", "goalsview", "goal", "te
 
 			// Subviews that are supposed to show in this view
 			var addGoalView = new AddGoalView( {collection: this.goals, model: new Goal()} );
-			var goalsView = new GoalsView( {collection: this.goals} );
-
 
 			// Render and append the views element (el)
 			this.$(".addGoal").append(addGoalView.render().el);
+
+            var goalsView = new GoalsView( {collection: this.goals} );
 			this.$(".goals").append(goalsView.render().el);
 
             if(this.showMessage) {

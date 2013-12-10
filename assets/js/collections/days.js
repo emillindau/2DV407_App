@@ -28,7 +28,7 @@ define(["backbone", "day"], function(Backbone, Day) {
             var d2 = new Date(lastDays[1].date());
             var diff = d1-d2;
             var hours = (diff / (1000*60*60));
-            console.log("Hours: " + hours);
+
             if(hours > 24) {
                 // Aw, it's been more than 24h
                 return true;

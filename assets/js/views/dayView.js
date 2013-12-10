@@ -21,7 +21,10 @@ define(["backbone", "mustache", "text!templates/dayTemplate.html"], function(Bac
 
 		// Populate view
 		descr: function() { return this.model.get("descr"); },
-		date: function() { return this.model.get("date"); }
+		date: function() {
+            var formatedDate = new Date(this.model.get("date")).toLocaleString();
+            return formatedDate;
+        }
 	});
 
 	return DayView;
