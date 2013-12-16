@@ -1,6 +1,6 @@
-define(["backbone", "mustache", "text!templates/dayTemplate.html"], function(Backbone, Mustache, dayTemplate) {
+define(["baseview", "mustache", "text!templates/dayTemplate.html"], function(BaseView, Mustache, dayTemplate) {
 
-	var DayView = Backbone.View.extend({
+	var DayView = BaseView.extend({
 
 		template: Mustache.compile(dayTemplate),
 
@@ -24,6 +24,10 @@ define(["backbone", "mustache", "text!templates/dayTemplate.html"], function(Bac
 		date: function() {
             var formatedDate = new Date(this.model.get("date")).toLocaleString();
             return formatedDate;
+        },
+
+        dispose: function() {
+
         }
 	});
 

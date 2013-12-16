@@ -14,6 +14,7 @@ require.config({
 		"underscore": "js/libs/underscore",
 		"router": "js/routers/router",
         "rank": "js/models/rank",
+        "baseview": "js/views/baseView",
 		"indexview": "js/views/indexView",
 		"editview": "js/views/editView",
 		"addgoalview": "js/views/addGoalView",

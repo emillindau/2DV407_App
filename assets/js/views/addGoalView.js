@@ -1,14 +1,19 @@
-define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"], function(Backbone, Mustache, Goal, goalFormTemplate){
+define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemplate.html", "messageview"], function(Backbone, BaseView, Mustache, Goal, goalFormTemplate, MessageView){
 
-	var AddGoalView = Backbone.View.extend({
+	var AddGoalView = BaseView.extend({
 
-		tagName: "form",
-		className: "form-horizontal",
 		template: Mustache.compile(goalFormTemplate),
 
         // The model will be set from indexView
 		initialize: function() {
             // Empty
+            var that = this;
+
+            this.listenTo(this.collection, "add", function() {
+                that.showMessage = true;
+                that.message = {error: false, message: "The goal has been added! Now try and keep it non zero!", header: "Success!"};
+                that.render();
+            });
 		},
 
 		events: {
@@ -37,6 +42,10 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 
 			this.$el.html(this.template(this));
 
+            if(this.showMessage) {
+                this.displayMessage(this.message);
+            }
+
 			return this;
 		},
 
@@ -55,6 +64,8 @@ define(["backbone", "mustache", "goal", "text!templates/goalFormTemplate.html"],
 
         dispose: function() {
             Backbone.Validation.unbind(this);
+            this.stopListening();
+            this.off();
         }
 	});
 

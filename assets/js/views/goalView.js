@@ -1,11 +1,11 @@
-define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], function(Backbone, Mustache, Day, goalTemplate) {
+define(["backbone", "baseview", "mustache", "day", "text!templates/goalTemplate.html"], function(Backbone, BaseView, Mustache, Day, goalTemplate) {
 
     /**
      * Probably considered as the mainview, in some ways
      * displaying the pure and basic model of a goal
      * @type {GoalView}
      */
-	var GoalView = Backbone.View.extend({
+	var GoalView = BaseView.extend({
 
 		template: Mustache.compile(goalTemplate),
 
@@ -13,6 +13,13 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 			// this.el = $("#listGoalsTemplate");
 			this.show = false;
 			this.day = new Day();
+
+            var that = this;
+            this.listenTo(this.model.days, "sync", function() {
+                that.showMessage = true;
+                that.message = {error: false, message: "The day has been added! Great work!", header: "Success!"};
+                that.render();
+            });
 		},
 
 		events: {
@@ -55,12 +62,18 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 				this.show = !this.show;
 			}
 
+            if(this.showMessage) {
+                this.displayMessage(this.message);
+            }
+
 			return this;
 		},
 
 		// Callbacks
 		deleteGoal: function() {
-			this.model.destroy();
+            if(confirm("Are you sure? Deleting is permanent")) {
+                this.model.destroy();
+            }
 		},
 
 		showDescr: function() {
@@ -110,6 +123,8 @@ define(["backbone", "mustache", "day", "text!templates/goalTemplate.html"], func
 
         dispose: function() {
             Backbone.Validation.unbind(this, {model: this.day});
+            this.stopListening();
+            this.off();
         }
 
 	});
