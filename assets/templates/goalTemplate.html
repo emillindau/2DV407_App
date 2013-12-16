@@ -1,4 +1,5 @@
-<div class="col-lg-4">
+
+<div class="col-lg-6">
     <!-- If the goal is still active, everything should be visible -->
     {{ #active }}
 	<div class="panel panel-default">
@@ -27,6 +28,10 @@
 				</div>
                 </form>
 			</div>
+
+            <div class="row">
+                <span class="messages"></span>
+            </div>
 
 			<button class="btn btn-success btn-sm" id="add-day">+ Add day</button>
 			<a href="#edit/{{ goalId }}" class="btn btn-warning btn-sm">- Edit</a>

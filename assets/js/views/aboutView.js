@@ -1,9 +1,9 @@
 /**
  * Created by Emil on 2013-12-02.
  */
-define(["backbone", "mustache", "text!templates/aboutTemplate.html"], function(Backbone, Mustache, aboutTemplate) {
+define(["baseview", "mustache", "text!templates/aboutTemplate.html"], function(BaseView, Mustache, aboutTemplate) {
 
-    var AboutView = Backbone.View.extend({
+    var AboutView = BaseView.extend({
 
         template: Mustache.compile(aboutTemplate),
 

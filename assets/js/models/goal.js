@@ -21,6 +21,7 @@ define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 		},
 
         setUpStorage: function() {
+            console.log("We do get here.. ");
             this.days = new Days();
             this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
             this.days.fetch();

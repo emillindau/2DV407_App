@@ -33,17 +33,17 @@ define(["backbone", "day"], function(Backbone, Day) {
                 // Aw, it's been more than 24h
                 return true;
             }
+
+            // Also, create a new date for today to check against last day
+            var d3 = new Date();
+            diff = d3-d1;
+            hours = (diff / (1000*60*60));
+
+            if(hours > 24) {
+                return true;
+            }
+
             return false;
-
-
-            /*var test1 = new Date("2013-12-05");
-            var test2 = new Date("2013-12-07");
-            console.log("test1" + test1);
-            console.log("test2" + test2);
-            var diffTest = test2-test1;
-            console.log(diffTest);
-            var hoursTest = (diffTest / (1000*60*60));
-            console.log("hoursTest: ", hoursTest);*/
         },
 
         /**
@@ -57,7 +57,7 @@ define(["backbone", "day"], function(Backbone, Day) {
             } else if(this.length > 0) {
                 return [new Day(), this.at(0)];
             } else {
-                throw new TooFewElementsException("Collection need to have at least two elements");
+                throw new TooFewElementsException("Collection need to have at least one elements");
             }
 
             function TooFewElementsException(message) {

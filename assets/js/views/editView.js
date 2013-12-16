@@ -1,6 +1,6 @@
-define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/editTemplate.html", "messageview"], function(Backbone, Mustache, Goals, Goal, DaysView, editTemplate, MessageView) {
+define(["backbone", "baseview", "mustache", "goals", "goal", "daysview", "text!templates/editTemplate.html", "messageview"], function(Backbone, BaseView, Mustache, Goals, Goal, DaysView, editTemplate, MessageView) {
 
-	var EditView = Backbone.View.extend({
+	var EditView = BaseView.extend({
 
 		template: Mustache.compile(editTemplate),
         showMessage: false,
@@ -19,6 +19,8 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
                 that.message = {error: false, message: "The goal has been edited and saved! Keep working!", header: "Success!"};
                 that.render();
             });
+
+            this.daysView = new DaysView( { collection: this.goal.days } );
 		},
 
         events: {
@@ -30,13 +32,10 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
 			this.$el.html(this.template(this));
 
 			// Subviews, in this case daysview
-			var daysView = new DaysView( { collection: this.goal.days } );
-			this.$(".days").append(daysView.render().el);
+            this.assign(this.daysView, ".days");
 
             if(this.showMessage) {
-                var messageView = new MessageView(this.message);
-                this.$(".messages").append(messageView.render().el);
-                this.showMessage = false;
+                this.displayMessage(this.message);
             }
 
             // Binding the validation to this view
@@ -70,6 +69,11 @@ define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/edi
             if(this.goal.isValid(true)) {
                 this.goal.save();
             }
+        },
+
+        dispose: function() {
+            this.stopListening();
+            this.off();
         },
 
 		// View helpers for populating templates

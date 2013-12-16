@@ -1,9 +1,9 @@
 /**
  * Created by Emil on 2013-12-02.
  */
-define(["backbone", "mustache", "goals", "goal", "daysview", "text!templates/specificGoalTemplate.html"], function(Backbone, Mustache, Goals, Goal, DaysView, specificGoalTemplate) {
+define(["baseview", "mustache", "goals", "goal", "daysview", "text!templates/specificGoalTemplate.html"], function(BaseView, Mustache, Goals, Goal, DaysView, specificGoalTemplate) {
 
-    var SpecificGoalView = Backbone.View.extend({
+    var SpecificGoalView = BaseView.extend({
 
         template: Mustache.compile(specificGoalTemplate),
 

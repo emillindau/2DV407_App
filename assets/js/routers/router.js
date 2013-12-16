@@ -2,26 +2,6 @@ define(["backbone", "indexview", "editview", "specificgoalview", "aboutview"], f
 
 	var Router = Backbone.Router.extend({
 
-		// This is probably not that good of solution
-        // so we'll leave it commented out
-		/*
-		views: (function() {
-			var indexView = new IndexView();
-			var editView = new EditView();
-
-			return {
-				index: function() {
-					return indexView;
-				},
-
-				edit: function() {
-					return editView;
-				}
-			};
-
-		})(),
-		*/
-
         view: {},
 
         // Thats probably main residing in opt, but could be any element

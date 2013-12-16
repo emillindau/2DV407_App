@@ -14,15 +14,8 @@ define(["backbone", "mustache", "text!templates/messagesTemplate.html"], functio
             "click button.close": "dismiss"
         },
 
-        initialize: function(opt) {
-            this.header = opt.header;
-            this.error = opt.error;
-            this.message = opt.message;
+        initialize: function() {
 
-            var that = this;
-            setTimeout( function() {
-                that.dismiss();
-            }, 3000);
         },
 
         render: function() {
@@ -31,7 +24,14 @@ define(["backbone", "mustache", "text!templates/messagesTemplate.html"], functio
         },
 
         setMessage: function(opt) {
-            this.initialize(opt);
+            this.header = opt.header;
+            this.error = opt.error;
+            this.message = opt.message;
+
+            var that = this;
+            setTimeout( function() {
+                that.dismiss();
+            }, 3000);
         },
 
         // Callbacks
