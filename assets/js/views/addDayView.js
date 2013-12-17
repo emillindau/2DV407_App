@@ -19,7 +19,7 @@ define(["backbone", "baseview", "mustache", "day", "text!templates/dayFormTempla
         },
 
         events: {
-            "submit": "submit"
+            "click button#addDayButton": "submit"
         },
 
         render: function() {
