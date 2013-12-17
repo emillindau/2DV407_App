@@ -22,13 +22,9 @@ define(["baseview", "mustache", "text!templates/dayTemplate.html"], function(Bas
 		// Populate view
 		descr: function() { return this.model.get("descr"); },
 		date: function() {
-            var formatedDate = new Date(this.model.get("date")).toLocaleString();
-            return formatedDate;
-        },
-
-        dispose: function() {
-
-        }
+			var formatedDate = new Date(this.model.get("date")).toLocaleString();
+			return formatedDate;
+		}
 	});
 
 	return DayView;

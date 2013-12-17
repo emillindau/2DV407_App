@@ -3,59 +3,59 @@
  */
 define(["backbone", "mustache", "text!templates/messagesTemplate.html"], function(Backbone, Mustache, messagesTemplate) {
 
-    var MessageView = Backbone.View.extend({
+	var MessageView = Backbone.View.extend({
 
-        template: Mustache.compile( messagesTemplate ),
-        header: "",
-        error: true,
-        message: "",
+		template: Mustache.compile( messagesTemplate ),
+		header: "",
+		error: true,
+		message: "",
 
-        events: {
-            "click button.close": "dismiss"
-        },
+		events: {
+			"click button.close": "dismiss"
+		},
 
-        initialize: function() {
+		initialize: function() {
 
-        },
+		},
 
-        render: function() {
-            this.$el.html(this.template(this));
-            return this;
-        },
+		render: function() {
+			this.$el.html(this.template(this));
+			return this;
+		},
 
-        setMessage: function(opt) {
-            this.header = opt.header;
-            this.error = opt.error;
-            this.message = opt.message;
+		setMessage: function(opt) {
+			this.header = opt.header;
+			this.error = opt.error;
+			this.message = opt.message;
 
-            var that = this;
-            setTimeout( function() {
-                that.dismiss();
-            }, 3000);
-        },
+			var that = this;
+			setTimeout( function() {
+				that.dismiss();
+			}, 3000);
+		},
 
-        // Callbacks
-        dismiss: function() {
-            this.$(".alert").hide("slow", function() {
+		// Callbacks
+		dismiss: function() {
+			this.$(".alert").hide("slow", function() {
 
-            });
-        },
+			});
+		},
 
-        // Populate view
-        error: function() {
-            return this.error;
-        },
+		// Populate view
+		error: function() {
+			return this.error;
+		},
 
-        header: function() {
-            return this.header;
-        },
+		header: function() {
+			return this.header;
+		},
 
-        message: function() {
-            return this.message;
-        }
+		message: function() {
+			return this.message;
+		}
 
-    });
+	});
 
-    return MessageView;
+	return MessageView;
 
 });

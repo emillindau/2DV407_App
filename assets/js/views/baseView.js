@@ -3,24 +3,44 @@
  */
 define(["backbone", "mustache", "messageview"], function(Backbone, Mustache, MessageView) {
 
-    var BaseView = Backbone.View.extend({
+	var BaseView = Backbone.View.extend({
 
-        messageView: new MessageView(),
-        showMessage: false,
-        message: {},
+		messageView: new MessageView(),
+		showMessage: false,
+		message: {},
 
-        assign: function(view, selector) {
-            view.setElement(this.$(selector)).render();
-        },
+		assign: function(view, selector) {
+			view.setElement(this.$(selector)).render();
+		},
 
-        displayMessage: function(message) {
-            this.messageView.setMessage(message);
-            this.assign(this.messageView, ".messages");
-            this.showMessage = false;
-        }
+		displayMessage: function(message, selector) {
+			this.messageView.setMessage(message);
+			this.assign(this.messageView, selector);
+			this.showMessage = false;
+		},
 
-    });
+		dispose: function() {
 
-    return BaseView;
+			console.log("-- DISPOSING --", this);
+
+			if(this.subViews) {
+				_.each(this.subViews, function(v) {
+					v.dispose();
+				});
+			}
+
+			this.stopListening();
+			this.off();
+			this.undelegateEvents();
+			this.remove();
+
+			if(typeof this.disposeSpecial === "function") {
+				this.disposeSpecial();
+			}
+		}
+
+	});
+
+	return BaseView;
 
 });

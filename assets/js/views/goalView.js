@@ -1,10 +1,10 @@
 define(["backbone", "baseview", "mustache", "day", "text!templates/goalTemplate.html"], function(Backbone, BaseView, Mustache, Day, goalTemplate) {
 
-    /**
-     * Probably considered as the mainview, in some ways
-     * displaying the pure and basic model of a goal
-     * @type {GoalView}
-     */
+	/**
+	 * Probably considered as the mainview, in some ways
+	 * displaying the pure and basic model of a goal
+	 * @type {GoalView}
+	 */
 	var GoalView = BaseView.extend({
 
 		template: Mustache.compile(goalTemplate),
@@ -14,23 +14,26 @@ define(["backbone", "baseview", "mustache", "day", "text!templates/goalTemplate.
 			this.show = false;
 			this.day = new Day();
 
-            var that = this;
-            this.listenTo(this.model.days, "sync", function() {
-                that.showMessage = true;
-                that.message = {error: false, message: "The day has been added! Great work!", header: "Success!"};
-                that.render();
-            });
+			this.listenTo(this.model.days, "sync", this.onDaysSync);
+		},
+
+		onDaysSync: function() {
+			this.showMessage = true;
+			this.message = {error: false, message: "The day has been added! Great work!", header: "Success!"};
+			this.render();
 		},
 
 		events: {
 			"click button#delete": "deleteGoal",
 			"click button#add-day": "showDescr",
 			"click button#addDayButton": "submit",
-            "mouseenter div.panel-heading": "hoverGoal",
-            "mouseleave div.panel-heading": "unHoverGoal"
+			"mouseenter div.panel-heading": "hoverGoal",
+			"mouseleave div.panel-heading": "unHoverGoal"
 		},
 
 		render: function() {
+
+			this.day = new Day();
 
 			// Binding the validation to this view
 			var that = this;
@@ -62,18 +65,18 @@ define(["backbone", "baseview", "mustache", "day", "text!templates/goalTemplate.
 				this.show = !this.show;
 			}
 
-            if(this.showMessage) {
-                this.displayMessage(this.message);
-            }
+			if(this.showMessage) {
+				this.displayMessage(this.message, ".messages");
+			}
 
 			return this;
 		},
 
 		// Callbacks
 		deleteGoal: function() {
-            if(confirm("Are you sure? Deleting is permanent")) {
-                this.model.destroy();
-            }
+			if(confirm("Are you sure? Deleting is permanent")) {
+				this.model.destroy();
+			}
 		},
 
 		showDescr: function() {
@@ -103,29 +106,29 @@ define(["backbone", "baseview", "mustache", "day", "text!templates/goalTemplate.
 			}
 		},
 
-        hoverGoal: function() {
-            this.$("div.panel").animate({
-               opacity: "0.5"
-            });
-        },
+		hoverGoal: function() {
+			this.$("div.panel").animate({
+			   opacity: "0.5"
+			});
+		},
 
-        unHoverGoal: function() {
-            this.$("div.panel").animate({
-                opacity: "1"
-            });
-        },
+		unHoverGoal: function() {
+			this.$("div.panel").animate({
+				opacity: "1"
+			});
+		},
 
 		// Populate view
 		name: function() { return this.model.name(); },
 		days: function() { return this.model.days.length; },
 		goalId: function() { return this.model.id; },
-        active: function() { return this.model.active() },
+		active: function() { return this.model.active() },
 
-        dispose: function() {
-            Backbone.Validation.unbind(this, {model: this.day});
-            this.stopListening();
-            this.off();
-        }
+		// Will be called from baseView
+		disposeSpecial: function() {
+			console.log("Disposing special!!");
+			Backbone.Validation.unbind(this, {model: this.day});
+		}
 
 	});
 

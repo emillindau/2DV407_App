@@ -1,19 +1,18 @@
-define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemplate.html", "messageview"], function(Backbone, BaseView, Mustache, Goal, goalFormTemplate, MessageView){
+define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemplate.html"], function(Backbone, BaseView, Mustache, Goal, goalFormTemplate){
 
 	var AddGoalView = BaseView.extend({
 
 		template: Mustache.compile(goalFormTemplate),
 
-        // The model will be set from indexView
+		// The model will be set from indexView
 		initialize: function() {
-            // Empty
-            var that = this;
+			this.listenTo(this.collection, "add", this.onAddGoal);
+		},
 
-            this.listenTo(this.collection, "add", function() {
-                that.showMessage = true;
-                that.message = {error: false, message: "The goal has been added! Now try and keep it non zero!", header: "Success!"};
-                that.render();
-            });
+		onAddGoal: function() {
+			this.showMessage = true;
+			this.message = {error: false, message: "The goal has been added! Now try and keep it non zero!", header: "Success!"};
+			this.render();
 		},
 
 		events: {
@@ -21,6 +20,8 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 		},
 
 		render: function() {
+			this.model = new Goal();
+
 			// Binding the validation to this view
 			Backbone.Validation.bind(this, {
 				valid: function(view, attr) {
@@ -30,6 +31,7 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 					$group.removeClass("has-error");
 					$group.find(".help-block").html("").addClass("hidden");
 				},
+
 				invalid: function(view, attr, error) {
 					var $el = view.$("[name=" + attr + "]"),
 						$group = $el.closest(".form-group");
@@ -42,9 +44,9 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 
 			this.$el.html(this.template(this));
 
-            if(this.showMessage) {
-                this.displayMessage(this.message);
-            }
+			if(this.showMessage) {
+				this.displayMessage(this.message, ".messages");
+			}
 
 			return this;
 		},
@@ -53,20 +55,18 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 		submit: function(event) {
 			event.preventDefault();
 
-            // Set name to this model
+			// Set name to this model
 			this.model.setName(this.$("input#name").val());
 
-            // And if it's valid, add it to collection.
+			// And if it's valid, add it to collection.
 			if(this.model.isValid(true)) {
-                this.collection.create(this.model);
+				this.collection.create(this.model);
 			}
 		},
 
-        dispose: function() {
-            Backbone.Validation.unbind(this);
-            this.stopListening();
-            this.off();
-        }
+		disposeSpecial: function() {
+			Backbone.Validation.unbind(this);
+		}
 	});
 
 	return AddGoalView;

@@ -3,20 +3,20 @@
  */
 define(["baseview", "mustache", "text!templates/aboutTemplate.html"], function(BaseView, Mustache, aboutTemplate) {
 
-    var AboutView = BaseView.extend({
+	var AboutView = BaseView.extend({
 
-        template: Mustache.compile(aboutTemplate),
+		template: Mustache.compile(aboutTemplate),
 
-        initialize: function() {
+		initialize: function() {
 
-        },
+		},
 
-        render: function() {
-            this.$el.html(this.template(this));
-            return this;
-        }
-    });
+		render: function() {
+			this.$el.html(this.template(this));
+			return this;
+		}
+	});
 
-    return AboutView;
+	return AboutView;
 
 });

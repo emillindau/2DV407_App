@@ -27,6 +27,7 @@ require.config({
 		"daysview": "js/views/daysView",
 		"dayview": "js/views/dayView",
         "specificgoalview": "js/views/specificGoalView",
+        "adddayview": "js/views/addDayView",
         "aboutview": "js/views/aboutView",
         "messageview": "js/views/messageView"
 	},

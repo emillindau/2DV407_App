@@ -4,7 +4,7 @@ define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 
 		defaults: {
 			name: "",
-            active: true
+			active: true
 		},
 
 		// Validation using Backbone.Validation-plugin
@@ -17,39 +17,38 @@ define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 		},
 
 		initialize: function() {
-            this.level = RANK.NONE;
+			this.level = RANK.NONE;
 		},
 
-        setUpStorage: function() {
-            console.log("We do get here.. ");
-            this.days = new Days();
-            this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
-            this.days.fetch();
+		setUpStorage: function() {
+			this.days = new Days();
+			this.days.localStorage = new Backbone.LocalStorage("Days" + this.id);
+			this.days.fetch();
 
-            // While we're here we can check if this goal still is active
-            if(this.days.checkInvalidDay()) {
-                // If we get here, sadly, this goal is inactive
-                this.set("active", false);
-            }
+			// While we're here we can check if this goal still is active
+			if(this.days.checkInvalidDay()) {
+				// If we get here, sadly, this goal is inactive
+				this.set("active", false);
+			}
 
-            // Can also check current rank here
-            if(this.get("active")) {
-                this.calculateCurrentRank();
-            }
-        },
+			// Can also check current rank here
+			if(this.get("active")) {
+				this.calculateCurrentRank();
+			}
+		},
 
-        calculateCurrentRank: function() {
-            var l = this.days.length;
-            if(l > 5) {
-                this.level = RANK.GOLD;
-            } else if(l > 3) {
-                this.level = RANK.SILVER;
-            } else if(l > 1) {
-                this.level = RANK.BRONZE;
-            } else {
-                this.level = RANK.NONE;
-            }
-        },
+		calculateCurrentRank: function() {
+			var l = this.days.length;
+			if(l > 5) {
+				this.level = RANK.GOLD;
+			} else if(l > 3) {
+				this.level = RANK.SILVER;
+			} else if(l > 1) {
+				this.level = RANK.BRONZE;
+			} else {
+				this.level = RANK.NONE;
+			}
+		},
 
 		// Helper for adding one to current day
 		addDay: function(day) {
@@ -59,14 +58,14 @@ define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 
 		// Setters
 		setName: function(newName) {
-			this.set("name", newName);
+			this.set("name", newName, {validate: true});
 		},
 
 		// Just for convenience
 		name: function() { return this.get("name"); },
 		days: function() { return this.get("days"); },
-        active: function() { return this.get("active"); },
-        getLevel: function() { return this.level; }
+		active: function() { return this.get("active"); },
+		getLevel: function() { return this.level; }
 
 	});
 

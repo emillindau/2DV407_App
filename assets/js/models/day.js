@@ -3,10 +3,10 @@ define(["backbone"], function(Backbone) {
 	var Day = Backbone.Model.extend({
 
 		defaults: function() {
-            return {
-                descr: "",
-                date: new Date()
-            };
+			return {
+				descr: "",
+				date: new Date()
+			};
 		},
 
 		validation: {
@@ -20,7 +20,7 @@ define(["backbone"], function(Backbone) {
 		initialize: function() {
 		},
 
-        date: function() { return this.get("date") }
+		date: function() { return this.get("date") }
 
 	});
 
