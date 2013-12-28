@@ -10,7 +10,18 @@ define(["backbone", "goal"], function(Backbone, Goal){
 			return this.find(function(goal){
 				return goal.id == id;
 			});
-		}
+		},
+
+        // Just a simple check if the goalname is already existing
+        isPresent: function(name) {
+            var found = this.find(function(goal) {
+                return goal.get("name") == name;
+            });
+
+            if(found)
+                return true;
+            return false;
+        }
 
 	});
 

@@ -12,7 +12,7 @@ define(["backbone", "days", "rank"], function(Backbone, Days, RANK){
 			name: [
 				{ required: true, msg: "Please enter name for goal" },
 				{ rangeLength: [3, 50], msg: "Please choose a name between 3-50 characters"},
-				{ pattern: "^[a-zåäöA-ZÅÄÖ]*$", msg: "Please enter valid characters (a-zåäöA-ZÅÄÖ0-9)"}
+				{ pattern: "^[a-zåäöA-ZÅÄÖ ]*$", msg: "Please enter valid characters (a-zåäöA-ZÅÄÖ0-9)"}
 			]
 		},
 

@@ -15,6 +15,12 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 			this.render();
 		},
 
+        onPresentGoal: function() {
+            this.showMessage = true;
+            this.message = {error: true, message: "The name is already present, choose another one!", header: "Failure!"};
+            this.render();
+        },
+
 		events: {
 			"submit": "submit"
 		},
@@ -60,7 +66,13 @@ define(["backbone", "baseview", "mustache", "goal", "text!templates/goalFormTemp
 
 			// And if it's valid, add it to collection.
 			if(this.model.isValid(true)) {
-				this.collection.create(this.model);
+                var present = this.collection.isPresent(this.model.name());
+
+                if(present) {
+                    this.onPresentGoal();
+                } else {
+                    this.collection.create(this.model);
+                }
 			}
 		},
 
